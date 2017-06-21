@@ -23,11 +23,11 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <fieldset>
-                                <legend><span>Create category  </span>
+                                <legend><span>Create Country  </span>
 
                                     <div class="site_nav">
                                         <a href="<?= base_url() ?>admin">Dashboard</a>
-                                        &raquo;<a href="<?= base_url() ?>admin/category<?= $this->input->get('category_id') ? "?category_id={$this->input->get('category_id')}" : ""?>"> category </a>
+                                        &raquo;<a href="<?= base_url() ?>admin/city<?= $this->input->get('CityId') ? "?category_id={$this->input->get('CityId')}" : ""?>"> category </a>
                                         &raquo; create
                                     </div>
                                 </legend>
@@ -71,13 +71,13 @@
                                             </select>
                                         </div>
                                         <div class="form-group" >
-                                            <label for="name"> City Name</label>
+                                            <label for="name"> Country Name</label>
                                             <input type="text" id="name" name="form[City]"
                                                    value="<?= $result->City ?>"
                                                    class="form-control" data-parsley-required="true">
                                         </div>
                                         <div class="form-group" >
-                                            <label for="name"> Delivery Amount</label>
+                                            <label for="name"> Delivery Amount (LKR)</label>
                                             <input type="text" id="name" name="form[DeliveryAmount]"
                                                    value="<?= $result->DeliveryAmount ?>"
                                                    class="form-control price" data-parsley-required="true">
@@ -94,7 +94,7 @@
                                         <tr>
                                             <th> # </th>
                                             <th> Zone </th>
-                                            <th> City </th>
+                                            <th> Country </th>
                                             <th> DeliveryAmount </th>
                                             <th> Action </th>
                                         </tr>
@@ -150,18 +150,18 @@
 
 
 <script>
-    $(".price").inputmask("decimal", {
-        radixPoint: ".",
-        groupSeparator: ",",
-        digits: 2,
-        autoGroup: true
-    }).on('keydown', function (e) {
-        this.val = $(this).val();
-    }).on('keyup', function () {
-        v = $(this).val().replace(",", "");
-        if ($(this).data('max-value') < v)
-            $(this).val($(this).data('max-value'));
-    });
+//    $(".price").inputmask("decimal", {
+//        radixPoint: ".",
+//        groupSeparator: ",",
+//        digits: 2,
+//        autoGroup: true
+//    }).on('keydown', function (e) {
+//        this.val = $(this).val();
+//    }).on('keyup', function () {
+//        v = $(this).val().replace(",", "");
+//        if ($(this).data('max-value') < v)
+//            $(this).val($(this).data('max-value'));
+//    });
 </script>
 </body>
 

@@ -90,7 +90,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><div style="text-align: right" > Powered by <a target="_blank" href="http://itmartx.com/">IT MARTX</a> </div>  </td>
+                    <td><div style="text-align: right" > Powered by <a target="_blank" href="https://www.Luxuryhandcraft.com">Luxuryhandcraft.com</a> </div>  </td>
                 </tr>
             </table>
             <?= form_close() ?>

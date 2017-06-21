@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en-us"  class="default" >
+<html lang="en-us" class="default">
 <head>
     <?php $this->load->view('inc/head'); ?>
     <script type="text/javascript">
@@ -19,7 +19,23 @@
         var comparator_max_item = 3;
         var comparedProductsIds = [];
         var contentOnly = false;
-        var currency = {"id":1,"name":"Dollar","iso_code":"USD","iso_code_num":"840","sign":"$","blank":"0","conversion_rate":"1.000000","deleted":"0","format":"1","decimals":"1","active":"1","prefix":"$ ","suffix":"","id_shop_list":null,"force_id":false};
+        var currency = {
+            "id": 1,
+            "name": "Dollar",
+            "iso_code": "USD",
+            "iso_code_num": "840",
+            "sign": "$",
+            "blank": "0",
+            "conversion_rate": "1.000000",
+            "deleted": "0",
+            "format": "1",
+            "decimals": "1",
+            "active": "1",
+            "prefix": "$ ",
+            "suffix": "",
+            "id_shop_list": null,
+            "force_id": false
+        };
         var currencyBlank = 0;
         var currencyFormat = 1;
         var currencyRate = 1;
@@ -62,30 +78,30 @@
     </script>
 
     <?php $this->load->view('inc/head_js'); ?>
-    <link href='<?=base_url()?>css/prettyPhoto.css' rel='stylesheet' type='text/css'>
+    <link href='<?= base_url() ?>css/prettyPhoto.css' rel='stylesheet' type='text/css'>
 
-    <script src="<?=base_url()?>js/validate.js" type="text/javascript" ></script>
-    <script src="<?=base_url()?>js/authentication.js" type="text/javascript" ></script>
-    <script src="<?=base_url()?>js/jquery.prettyPhoto.js" type="text/javascript" ></script>
+    <script src="<?= base_url() ?>js/validate.js" type="text/javascript"></script>
+    <script src="<?= base_url() ?>js/authentication.js" type="text/javascript"></script>
+    <script src="<?= base_url() ?>js/jquery.prettyPhoto.js" type="text/javascript"></script>
     <script>
-        $(function(){
-            $("#shipping_address").click(function(){
-               if($(this).prop("checked")){
-                    $("#shipping").val($('<div/>').html("<?= html_escape($cus->address1 ) ?>").text() );
-                   $("#ZoneId").val("<?= $cus->ZoneId  ?>").trigger("change");
-                    //$("#city").val($('<div/>').html("<?= html_escape($cus->city ) ?>").text() );
-                    //$("#postcode").val($('<div/>').html("<?= html_escape($cus->postcode ) ?>").text() );
-                    $("#phone").val($('<div/>').html("<?= html_escape($cus->phone ) ?>").text() );
-                  // $("#id_state").val("<?= $cus->state  ?>");
-               }else{
-                   $("#shipping").val("");
-                   $("#ZoneId").val("0");
-                   $("#CityId").html("<option value='' >--------------</option>");
-                  // $("#city").val("");
-                  // $("#postcode").val("");
-                   $("#phone").val("");
-                  // $("#id_state").val("");
-               }
+        $(function () {
+            $("#shipping_address").click(function () {
+                if ($(this).prop("checked")) {
+                    $("#shipping").val($('<div/>').html("<?= html_escape($cus->address1.','.$cus->address2) ?>").text());
+                    $("#ZoneId").val("<?= $cus->ZoneId  ?>").trigger("change");
+                   // $("#city").val($('<div/>').html("<?= html_escape($cus->CityId ) ?>").text() );
+                    $("#postcode").val($('<div/>').html("<?= html_escape($cus->postcode ) ?>").text() );
+                    $("#phone").val($('<div/>').html("<?= html_escape($cus->phone ) ?>").text());
+                    // $("#id_state").val("<?= $cus->state  ?>");
+                } else {
+                    $("#shipping").val("");
+                    $("#ZoneId").val("0");
+                    $("#CityId").html("<option value='' >--------------</option>");
+                    // $("#city").val("");
+                     $("#postcode").val("");
+                    $("#phone").val("");
+                    // $("#id_state").val("");
+                }
             });
         });
     </script>
@@ -100,7 +116,8 @@
             <!-- Breadcrumb -->
             <div class="breadcrumb clearfix">
                 <a class="home" href="" title="Return to Home"><i class="fa fa-home"></i></a>
-                <span class="navigation-pipe">&gt;</span> Authentication </div>
+                <span class="navigation-pipe">&gt;</span> Authentication
+            </div>
             <!-- /Breadcrumb -->
 
         </div>
@@ -146,23 +163,20 @@
 
 
             <div class="row">
-            <div class="col-xs-12 col-sm-6 col-lg-6"> <?php $this->load->view("inc/shipping") ?></div>
-            <div class="col-xs-12 col-sm-6 col-lg-6">
-            
-            <ul class="gallery clearfix">
-				<li>
-                <a href="<?= base_url() ?>images/persona_information_1.jpg" rel="prettyPhoto">
-                <img src="<?= base_url() ?>images/persona_information_1.jpg"/>
-                </a>
-                </li>
-			</ul>
-			
-            
-            
-          
-               
+                <div class="col-xs-12 col-sm-6 col-lg-6"> <?php $this->load->view("inc/shipping") ?></div>
+                <div class="col-xs-12 col-sm-6 col-lg-6">
+
+                    <ul class="gallery clearfix">
+                        <li>
+                            <a href="<?= base_url() ?>images/persona_information_1.jpg" rel="prettyPhoto">
+                                <img src="<?= base_url() ?>images/persona_information_1.jpg"/>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </div>
             </div>
-        </div>
     </section>
     <!-- Footer -->
     <?php $this->load->view('inc/footer'); ?>
@@ -170,36 +184,45 @@
 <script>
     $(function () {
         $("#ZoneId").change(function () {
-                var $this= $(this) , CityId = <?= (int)  $cus->CityId  ?> ;
-                $.ajax({
-                    url : baseUri +"api/getCityByZone/?ZoneId=2",
-                    data : {ZoneId : $this.val()} ,
-                    success : function (json) {
-                        var option = "<option value='' >---------------</option>";
-                        for (var i in json){
-                            option += "<option value='"+ json[i].CityId +"' "+ (CityId == json[i].CityId ?"selected":"" ) +" >"+ json[i].City +"</option>";
-                        }
-                        $("#CityId").empty().html(option);
+            var $this = $(this), CityId = <?= (int)  $cus->CityId  ?>;
+
+            $.ajax({
+                url: baseUri + "api/getCityByZone/?ZoneId=2",
+                data: {ZoneId: $this.val()},
+                success: function (json) {
+                    var option = "<option value='' >---------------</option>";
+                    for (var i in json) {
+                        option += "<option value='" + json[i].CityId + "' " + (CityId == json[i].CityId ? "selected" : "" ) + " >" + json[i].City + "</option>";
                     }
-                });
-            })
+                    $("#CityId").empty().html(option);
+                }
+            });
+        })
             <?php if($this->input->post('ZoneId')): ?>
             .trigger("change");
         <?php endif; ?>
     })
 </script>
 <script type="text/javascript" charset="utf-8">
-			$(document).ready(function(){
-				$("area[rel^='prettyPhoto']").prettyPhoto();
-				
-				$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'light_square',slideshow:3000});
-				$(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'fast',slideshow:10000, hideflash: true});
-		
-			});
-			</script>
+    $(document).ready(function () {
+        $("area[rel^='prettyPhoto']").prettyPhoto();
+
+        $(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({
+            animation_speed: 'normal',
+            theme: 'light_square',
+            slideshow: 3000
+        });
+        $(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({
+            animation_speed: 'fast',
+            slideshow: 10000,
+            hideflash: true
+        });
+
+    });
+</script>
 
 <!-- #page -->
-<p id="back-top"> <a href="#top" title="Scroll To Top"><i class="fa fa-angle-up"></i>Top</a> </p>
+<p id="back-top"><a href="#top" title="Scroll To Top"><i class="fa fa-angle-up"></i>Top</a></p>
 
 </body>
 </html>

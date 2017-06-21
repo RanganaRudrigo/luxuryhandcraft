@@ -273,7 +273,6 @@ class User extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required');
 
         if( $this->form_validation->run() ) {
-
             if( $this->cus->update( $this->input->post() , "id=".$cus['id'] )  ){
                 $this->session->set_flashdata('valid', ' Successfully Saved ');
             }else{
@@ -288,8 +287,17 @@ class User extends CI_Controller
                 $this->session->set_flashdata('error', validation_errors() );
             }
         }
+
+//        $this->load->model("zone_model");
+        $this->load->model("city_model");
+
+//        $d['customer']->Zone = $this->zone_model->getBy(["ZoneId"=>$d['customer']->ZoneId],1)->Zone;
+        $d['city'] = $this->city_model->getBy(['Status'=>1]);
+
         $this->load->model("zone_model","zone");
         $d['state'] = $this->zone->getBy(['Status'=>1]);
+
+//        p($d['city']);exit;
 
         $this->load->view('edit_account',$d);
     }

@@ -139,7 +139,7 @@
                             </a>
                         </li>
                         <li><a href="<?= base_url() ?>admin/city/manage">
-                                City </a></li>
+                                Country </a></li>
                     </ul>
                 </div>
             </div>

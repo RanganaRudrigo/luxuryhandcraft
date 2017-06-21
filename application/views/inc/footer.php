@@ -127,7 +127,7 @@
                             <li class="item"><a href="<?= base_url() ?>user" title=""> My Accounts </a></li>
                             <li class="item"><a href="<?= base_url() ?>user/history" title=""> My Orders </a></li>
                             <li class="item"><a href="<?= base_url() ?>user/wishlist" title=""> Wish List </a></li>
-                            <li class="item"><a href="<?= base_url() ?>user/edit" title=""> Accounts Settings </a></li>
+                            <li class="item"><a href="<?= base_url() ?>User/edit" title=""> Accounts Settings </a></li>
                         </ul>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                     <div class="block_content toggle-footer">
                         <ul class="toggle-footer list-group bullet">
                             <li class="item"><a href="<?= base_url() ?>Contact-us" title=""> Customer Service </a></li>
-                            <li class="item"><a href="<?= base_url() ?>returns" title=""> Returns</a></li>
+                            <li class="item"><a href="<?= base_url() ?>Returns" title=""> Returns</a></li>
                             <li class="item"><a href="<?= base_url() ?>Buyer-Guide" title=""> Buyers Guide </a></li>
                             <li class="item"><a href="<?= base_url() ?>Contact-us" title=""> Contacts Us </a></li>
                         </ul>

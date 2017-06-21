@@ -18,7 +18,7 @@ $route['Security'] = 'home/Security';
 $route['Delivery-Information'] = 'home/Delivery_Information';
 $route['Buyer-Guide'] = 'home/Buyer_Guide';
 
-$route['returns'] = 'home/returns';
+$route['Returns'] = 'home/returns';
 
 $route['Services'] = 'home/services';
 $route['blog'] = 'home/blog';

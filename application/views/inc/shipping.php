@@ -45,6 +45,9 @@
         <div class="col-lg-9">
             <select required name="CityId" id="CityId" class="form-control">
                 <option value="" > --------------- </option>
+<!--                --><?php //foreach($city as $country ): ?>
+<!--                    <option id="--><?//= $country->City ?><!--" --><?//= $customer->CityId == $country->CityId ? "selected" :"" ?><!--  > --><?//= $country->City ?><!-- </option>-->
+<!--                --><?php //endforeach ?>
             </select>
         </div>
     </div>
@@ -63,13 +66,13 @@
                 <?php endforeach ?>
             </select>
         </div>
-    </div>
-    <div class="required postcode form-group unvisible" style="display: block;">
-        <label class="control-label col-sm-4" for="postcode">Zip/Postal Code <sup>*</sup></label>
-        <div class="col-sm-6">
+    </div> -->
+    <div class="form-group" >
+        <label class="control-label col-sm-3" for="postcode">Zip/Postal Code <sup>*</sup></label>
+        <div class="col-sm-9">
             <input class="is_required validate form-control" required data-validate="isPostCode" type="text" id="postcode" name="postcode" value="">
         </div>
-    </div> -->
+    </div>
     <div class="form-group">
         <label class="control-label col-lg-3" for="other">Additional information</label>
         <div class="col-lg-9">

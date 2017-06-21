@@ -237,10 +237,13 @@
                             </div>
 
                             <div class="required id_state form-group" style="">
-                                <label class="control-label col-lg-3" for="id_state"> City <sup>*</sup></label>
+                                <label class="control-label col-lg-3" for="id_state"> Country <sup>*</sup></label>
                                 <div class="col-lg-9">
                                     <select name="CityId" id="CityId" class="form-control">
                                           <option value="0" > --------------- </option>
+                                        <?php foreach($city as $country ): ?>
+                                            <option id="<?= $country->City ?>" <?= $customer->CityId == $country->CityId ? "selected" :"" ?>  value="<?= $country->CityId ?>"> <?= $country->City ?> </option>
+                                        <?php endforeach ?>
                                     </select>
                                 </div>
                             </div>
@@ -262,18 +265,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="required postcode form-group unvisible" style="display: block;">
+
+                            <div class="required form-group" >
                                 <label class="control-label col-sm-4" for="postcode">Zip/Postal Code <sup>*</sup></label>
                                 <div class="col-sm-6">
                                     <input class="is_required validate form-control" data-validate="isPostCode" type="text" id="postcode" name="postcode" value="<?= $customer->postcode ?>">
                                 </div>
-                            </div> -->
-                            <div class="required form-group">
+                            </div>-->
+
+                            <div class="form-group phone-number">
+                                <label class="control-label col-lg-3" for="phone">Zip/Postal Code <sup>*</sup>  </label>
+                                <div class="col-lg-9">
+                                    <input class="is_required validate form-control" data-validate="isPostCode" type="text" id="postcode" name="postcode" value="<?= $customer->postcode ?>">
+                                </div>
+                            </div>
+
+                            <div class="required form-group" style="display: none">
                                 <label class="control-label col-lg-3" for="id_country">Country <sup>*</sup></label>
                                 <div class="col-lg-9">
                                     <select id="id_country" class="form-control" name="id_country"><option value="173" selected="selected">Sri Lanka</option></select>
                                 </div>
                             </div>
+
                             <div class="form-group phone-number">
                                 <label class="control-label col-lg-3" for="phone">Home phone  </label>
                                 <div class="col-lg-9">

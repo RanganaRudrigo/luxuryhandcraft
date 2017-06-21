@@ -35,14 +35,17 @@ class City extends  MY_Controller
 
         $this->form_validation->set_rules('form[City]', 'Name', 'required');
 
+//        p($this->input->post('form'));exit;
+
         if($this->form_validation->run()){
             if(!$_id)
                 $this->city->create($this->input->post('form'));
+
             else
                 $this->city->update($this->input->post('form'),"CityId= $_id");
             redirect(current_url());
         }
-
+//        p($this->db->last_query());exit;
         $d['result'] = $this->city->getBy(['CityId'=>$_id],1);
 
         $this->load->view('admin/city',$d);

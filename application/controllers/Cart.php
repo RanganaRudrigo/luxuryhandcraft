@@ -361,7 +361,9 @@ class Cart extends CI_Controller
                 break;
             case 4 :
                 $this->load->model("zone_model","zone");
+                $this->load->model("city_model");
                 $d['state'] = $this->zone->getBy(['Status'=>1]);
+                $d['city'] = $this->city_model->getBy(['Status'=>1]);
                 if(count( $this->cart->contents() )  == 0  ) {
                     $this->session->set_flashdata('notification',  array('error' => " Your Cart is Empty"  ) );
                     redirect( base_url()."cart/order" ) ;
