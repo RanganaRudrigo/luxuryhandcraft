@@ -163,7 +163,9 @@
 
 
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-lg-6"> <?php $this->load->view("inc/shipping") ?></div>
+                <div class="col-xs-12 col-sm-6 col-lg-6">
+                    <?php $this->load->view("inc/shipping") ?>
+                </div>
                 <div class="col-xs-12 col-sm-6 col-lg-6">
 
                     <ul class="gallery clearfix">

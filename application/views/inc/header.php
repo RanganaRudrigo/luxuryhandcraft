@@ -391,14 +391,14 @@
                                            href="<?= base_url() ?>product_detail/<?= url_title($item['name'])."/".( explode("-",$item['id'])[0] )   ?>"
                                            title="<?= $item['name'] ?>"><img
                                                 src="<?= base_url('uploads/thumbs')."/".$item['options']['image'] ?>" width="75"
-                                                alt="<?= $item['name'] ?>"/></a>
+                                                alt="<?= $item['name'] ?>" style="color: black"/></a>
                                     <div class="cart-info">
                                         <div class="product-name">
                                             <span class="quantity-formated"><span class="quantity"><?= $item['qty'] ?></span>&nbsp;x&nbsp;</span>
                                             <a
                                                 class="cart_block_product_name"
                                                 href="<?= base_url() ?>product_detail/<?= url_title($item['name'])."/".$item['id'] ?>"
-                                                title="<?= $item['name'] ?>"><?= character_limiter(  $item['name'] , 10) ?></a>
+                                                title="<?= $item['name'] ?>" style="color: black"><?= character_limiter(  $item['name'] , 10) ?></a>
                                                 <span class="price"><?= number_format($item['price'],2) ?></span>
                                         </div>
                                         <div class="product-atributes">

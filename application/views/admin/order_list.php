@@ -39,6 +39,7 @@
                                     <th>Customer Name</th>
                                     <th>Total </th>
                                     <th>Payment Type </th>
+                                    <th>Payment Satus </th>
                                     <th>Delivey </th>
                                     <th></th>
 
@@ -55,6 +56,16 @@
                                         <td>  <?= $row->firstname ?> <?= $row->lastname ?> </td>
                                         <td class="text-right" >  <?= number_format( $row->total + $row->shipping , 2) ?> </td>
                                         <td>  <?= $row->payment == 1 ? "<span class='badge badge-success' >Credit Cart</span> " :"<span class='badge badge-warning' >cash on delivery</span>" ?> </td>
+                                        <td>
+                                            <?php
+                                            if(  $row->status == 0 AND $row->payment == 2 ){ ?>
+                                                <span class="badge badge-success" > success </span>
+                                            <?php }elseif(  $row->status == 1 ){ ?>
+                                                <span class="badge badge-success" > success </span>
+                                            <?php }else{?>
+                                                <span class="badge badge-danger" > failure </span>
+                                            <?php }?>
+                                        </td>
                                         <td id="order_deliver_<?= $row->id ?>" >  <?= $row->delivery == 1 ? "<span class='badge badge-success' >Delivered</span> " :"<span class='badge badge-danger' >not yet</span>" ?> </td>
                                         <td class="text-right" >
                                             <a class=" btn btn-warning   fa fa-pencil-square-o" onclick="row.openModel(<?=$row->id?>)"      > View </a>

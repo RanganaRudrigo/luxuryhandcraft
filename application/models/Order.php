@@ -69,15 +69,17 @@ class Order extends MY_Model
         return $this->db->where('id',$id)->update("order", [ 'state' => 'D' ] ) ? 1 : 0 ;
     }
 
-    function confirm($order){
-        $this->db->where('id',$order->id);
+    function confirm($order,$responseVariables){
+//        $this->db->where('id',$order->id);
+        $this->db->where('id',$order[0]->id);
         $this->db->update('order' , array(
-            'status' =>  $this->input->get('vpc_TxnResponseCode') ,
-            'receipt_no' => $this->input->get('vpc_ReceiptNo'),
-            'transaction_no' => $this->input->get('vpc_TransactionNo')
+//            'status' =>  $this->input->get('vpc_TxnResponseCode') ,
+            'status' =>  ($responseVariables[4])== 'accepted' ? 1 : 0 ,
+//            'transaction_no' => $this->input->get('vpc_TransactionNo')
+            'transaction_no' => $responseVariables[1]
         ) );
 
-        if($this->input->get('vpc_TxnResponseCode') == 0 ) {
+        if($responseVariables[4] == 'accepted' ) {
             $orders = $this->db->from("order_detail")->where("order_id",$order->id)->get()->result();
  
             foreach ($orders as $ord){
@@ -98,6 +100,10 @@ class Order extends MY_Model
 
     function getByCustomerId($id){
         return $this->db->from("order")->where('customer_id',$id)->order_by('id','desc')->get()->result();
+    }
+
+    function getByCustomerIdCallBack($id,$limit){
+        return $this->db->from("order")->where('customer_id',$id)->order_by('id','desc')->limit($limit)->get()->result();
     }
 
     function changeDeliveryStatus($id,$status){

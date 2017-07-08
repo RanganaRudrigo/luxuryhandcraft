@@ -361,9 +361,7 @@ class Cart extends CI_Controller
                 break;
             case 4 :
                 $this->load->model("zone_model","zone");
-                $this->load->model("city_model");
                 $d['state'] = $this->zone->getBy(['Status'=>1]);
-                $d['city'] = $this->city_model->getBy(['Status'=>1]);
                 if(count( $this->cart->contents() )  == 0  ) {
                     $this->session->set_flashdata('notification',  array('error' => " Your Cart is Empty"  ) );
                     redirect( base_url()."cart/order" ) ;
@@ -423,40 +421,63 @@ class Cart extends CI_Controller
 
                         $this->cart->destroy();
                         $this->session->set_flashdata('new_order', TRUE );
-                        redirect(base_url()."cart/order_detail/".$this->order->id."?type=cash");
+//                        redirect(base_url()."cart/order_detail/".$this->order->id."?type=cash");
+                        redirect(base_url()."cart/callback?type=cash");
 
                     }
                     else {
-                        $d['action']	= 'https://migs.mastercard.com.au/vpcpay';
 
-                        $found_secret = 'A2C0520989919CA223313C5A7C32CFC9';
+                        $this->load->library('ipg');
+                        $rsa = new Crypt_RSA();
+                        $d['action']	= 'https://webxpay.com/index.php?route=checkout/billing';
+                        $found_secret = '4bf72bba-32e2-4165-88a5-0305076beebc';
+                        $rsa->loadKey(PUBLIC_KEY);
 
-                        $d['payment']['vpc_Version'] 		= '1';
-                        $d['payment']['vpc_Command'] 		= 'pay';
-                        $d['payment']['vpc_MerchTxnRef'] 	= $this->order->id . '_' . time();
-                        $d['payment']['vpc_AccessCode'] 	= '36DB66D7';
-                        $d['payment']['vpc_Merchant'] 		= 'DB91611';
-                        $d['payment']['vpc_OrderInfo'] 		= $this->order->id;
-                        $d['payment']['vpc_Amount'] 		= (100* ( $this->cart->total()  + 25  ) ) ;
-                        $d['payment']['vpc_Locale'] 		= 'en';
-                        $d['payment']['vpc_ReturnURL'] 		= base_url().'cart/callback';
 
-                        ksort($d['payment']);
-
-                        $hash = trim($found_secret);
-                        foreach ($d['payment'] as $field) {
-                            $hash .= $field;
-                        }
-                        $md5hash = md5($hash);
-
-                        $d['payment']['vpc_SecureHash'] 	= $md5hash;
+                        $d['cus'] = $this->cus->getBy(array('id'=> $this->session->front_user['id']  ) , 1 ) ;
+                        $plaintext = date('ydmh').'|'.$this->cart->total();
+                        $encrypt = $rsa->encrypt($plaintext);
+                        //encode for data passing
+                        $payment_1 = base64_encode($encrypt);
+//                        $d['action']	= 'https://migs.mastercard.com.au/vpcpay';
+//                        $found_secret = 'A2C0520989919CA223313C5A7C32CFC9';
+//                        $d['payment']['vpc_Version'] 		= '1';
+//                        $d['payment']['vpc_Command'] 		= 'pay';
+//                        $d['payment']['vpc_MerchTxnRef'] 	= $this->order->id . '_' . time();
+//                        $d['payment']['vpc_AccessCode'] 	= '36DB66D7';
+//                        $d['payment']['vpc_Merchant'] 		= 'DB91611';
+//                        $d['payment']['vpc_OrderInfo'] 		= $this->order->id;
+//                        $d['payment']['vpc_Amount'] 		= (100* ( $this->cart->total()  + 25  ) ) ;
+//                        $d['payment']['vpc_Locale'] 		= 'en';
+//                        $d['payment']['vpc_ReturnURL'] 		= base_url().'cart/callback';
+//
+//                        ksort($d['payment']);
+//                        $hash = trim($found_secret);
+//                        foreach ($d['payment'] as $field) {
+//                            $hash .= $field;
+//                        }
+//                        $md5hash = md5($hash);
+//                        $d['payment']['vpc_SecureHash'] 	= $md5hash;
+//                        p($this->session->front_user);exit;
                         ?>
                         <html>
                         <body>
-                        <form action="<?=$d['action']?>" method="get" id="checkout-form">
-                            <?php foreach($d['payment'] as $k => $v) {
-                                echo form_hidden( $k , $v );
-                            } ?>
+                        <form action="<?=$d['action']?>" method="post" id="checkout-form">
+                            <input type="hidden" name="first_name" value="<?= $d['cus']->firstname ?>">
+                            <input type="hidden" name="last_name" value="<?= $d['cus']->lastname ?>"><br>
+                            <input type="hidden" name="email" value="<?= $d['cus']->email ?>"><br>
+                            <input type="hidden" name="contact_number" value="<?= $this->session->front_user['phone'] ?>"><br>
+                            <input type="hidden" name="address_line_one" value="<?= $this->session->front_user['shipping'] ?>"><br>
+
+                            <input type="hidden" name="city" value="<?= $d['cus']->CityId ?>"><br>
+                            <input type="hidden" name="state" value="<?= $this->session->front_user['state'] ?>"><br>
+                            <input type="hidden" name="postal_code" value="<?= $this->session->front_user['postcode'] ?>"><br>
+                            <input type="hidden" name="country" value="<?= $this->session->front_user['city'] ?>"><br>
+                            <input type="hidden" name="process_currency" value="LKR"><br>
+                            <input type="hidden" name="cms" value="PHP"><br>
+                            <input type="hidden" name="payment" value="<?php echo $payment_1; ?>" >
+                            <input type="hidden" name="secret_key" value="<?php echo $found_secret; ?>" >
+
                         </form>
                         <script language='javascript'>document.getElementById('checkout-form').submit();</script>
                         </body>
@@ -557,22 +578,69 @@ class Cart extends CI_Controller
             $cat->pro = $this->pro->getProList($cat->id  , "id , title , image  , price , discount"  );
         }
 
+
+
+
         $this->load->model('order');
-        $order = $this->order->getByOrderId($this->input->get("vpc_OrderInfo"));
-        if( is_object($order) ) {
-            $this->order->confirm($order );
+//no need this line
+//        $order = $this->order->getByOrderId($this->input->get("vpc_OrderInfo"));
+        $order = $this->order->getByCustomerIdCallBack($this->session->front_user['id'],1);
+        $this->load->library('ipg');
+        $rsa = new Crypt_RSA();
+//load public key for signature matching
+        $rsa->loadKey(PUBLIC_KEY);
+        $payment = base64_decode($_POST ["payment"]);
+        $signature = base64_decode($_POST ["signature"]);
+        $custom_fields = base64_decode($_POST ["custom_fields"]);
+//verify signature
+        $signature_status = $rsa->verify($payment, $signature) ? TRUE : FALSE;
+//get payment response in segments
+//payment format: order_id|order_refference_number|date_time_transaction|payment_gateway_used|status_code|comment;
+        $responseVariables = explode('|', $payment);
+//display values
+        $d['verify'] = $signature_status ;
+        $OrderId = $responseVariables[0];
+        $TransactionId = $responseVariables[1];
+//        $DateAndTime = $responseVariables[2];
+        $OrderStatus = $responseVariables[3];
+        $payment = base64_decode($_POST ["payment"]);
+        $signature = base64_decode($_POST ["signature"]);
+        $custom_fields = base64_decode($_POST ["custom_fields"]);
+//verify signature
+        $signature_status = $rsa->verify($payment, $signature) ? TRUE : FALSE;
+//get payment response in segments
+//payment format: order_id|order_refference_number|date_time_transaction|payment_gateway_used|status_code|comment;
+        $responseVariables = explode('|', $payment);
+//display values
+//        p($signature_status);
+        $custom_fields_varible = explode('|', $custom_fields);
+//        p($custom_fields_varible);
+//        echo '<br/>';
+//        p($responseVariables);
+//        p($order);
+        if( is_array($order) ) {
+//            p('asdasd');
+
+            $this->order->confirm($order,$responseVariables );
+//            $d['order'] = $order ;
+//            $d['orders'] = $this->order->getByCustomerId($order[0]->customer_id);
+//            $d['customer'] = $this->cus->getBy( array('id' => $order[0]->customer_id ) , 1 );
+            $d['responce'] = $responseVariables;
+
+//            $this->order->confirm($order );
             $d['order'] = $order ;
-            $d['orders'] = $this->order->getByCustomerId($order->customer_id);
-            $d['customer'] = $this->cus->getBy( array('id' => $order->customer_id ) , 1 );
+            $d['orders'] = $this->order->getByCustomerId($order[0]->customer_id);
+            $d['customer'] = $this->cus->getBy( array('id' => $order[0]->customer_id ) , 1 );
             $this->load->model("zone_model");
             $this->load->model("city_model");
             $d['customer']->Zone = $this->zone_model->getBy(["ZoneId"=>$d['customer']->ZoneId],1)->Zone;
             $d['customer']->City = $this->city_model->getBy(["CityId"=>$d['customer']->CityId],1)->City;
 
+//            p($d['order']);exit;
             // If we get a successful response back...
-            if (isset($_GET['vpc_TxnResponseCode'])) {
+            if (isset($signature_status)) {
                 switch($_GET['vpc_TxnResponseCode']) {
-                    case '0': 
+                    case 'accepted':
                         ob_start();
                         $this->load->view('inc/email-template',$d);
                         $mge = ob_get_contents();
@@ -609,6 +677,7 @@ class Cart extends CI_Controller
 
             $this->load->view('order_history',$d);
         }else {
+//            $this->load->view('order_history',$d);
              show_404();
         }
 
@@ -623,12 +692,14 @@ class Cart extends CI_Controller
         }
 
         $this->load->model('order');
-        $order = $this->order->getByOrderId($id);
+        $order[] = $this->order->getByOrderId($id);
 
-        if(is_object($order) ) {
+//        p($order);exit;
 
-            $d['orders'] = $this->order->getByCustomerId($order->customer_id);
-            $d['customer'] = $this->cus->getBy( array('id' => $order->customer_id ) , 1 );
+        if(is_array($order) ) {
+
+            $d['orders'] = $this->order->getByCustomerId($order[0]->customer_id);
+            $d['customer'] = $this->cus->getBy( array('id' => $order[0]->customer_id ) , 1 );
             $this->load->model("zone_model");
             $this->load->model("city_model");
             $d['customer']->Zone = $this->zone_model->getBy(["ZoneId"=>$d['customer']->ZoneId],1)->Zone;

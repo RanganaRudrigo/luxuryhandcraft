@@ -212,7 +212,7 @@
                                 </a>
                             </p>
                         </div> 
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-xs-12 col-md-6" style="display: <?= ($this->session->front_user['CityId']!=1)? 'none' : ''?>">
                             <p class="payment_module">
                                 <a class="cash" href="<?=base_url()?>cart/order?step=5&payment=2" title="Pay by Cash.">
                                     Pay by Cash <br/><span>Cash on delivery</span>

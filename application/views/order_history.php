@@ -114,17 +114,25 @@
                                 <section id="center_column" class="col-md-12">
                                     <h1 class="page-heading">Order Confirmation</h1>
 
-                                    <?php if ($order->status == 0): ?>
+                                    <!-- --><?php /*if($order->status == 0 ): */?>
+
+                                    <?php if($order[0]->status == 0 AND $order[0]->payment == 2){ ?>
+                                        <p class="alert alert-success">Your order is successfully placed.
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                    aria-hidden="true">&times;</button>
+                                        </p>
+
+                                    <?php }elseif($responce[4] == 'accepted' ){ ?>
                                         <p class="alert alert-success">Your order is successfully complete.
                                             <button type="button" class="close" data-dismiss="alert"
                                                     aria-hidden="true">&times;</button>
                                         </p>
-                                    <?php else : ?>
+                                    <?php }else{ ?>
                                         <p class="alert alert-danger">Your order transaction failure.
                                             <button type="button" class="close" data-dismiss="alert"
                                                     aria-hidden="true">&times;</button>
                                         </p>
-                                    <?php endif; ?>
+                                    <?php  } ?>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-6">
 
@@ -209,11 +217,14 @@
                                     </td>
 
                                     <td data-value="10" class="history_state">
-                                        <?php if ($o->status == 0): ?>
+                                        <?php
+                                        if(  $o->status == 0 AND $o->payment == 2 ){ ?>
                                             <span class="label" style="background-color:#3ec02b; border-color:#3ec02b;"> success </span>
-                                        <?php else : ?>
+                                        <?php }elseif(  $o->status == 1 ){ ?>
+                                            <span class="label" style="background-color:#3ec02b; border-color:#3ec02b;"> success </span>
+                                        <?php }else{?>
                                             <span class="label" style="background-color:#e1341f; border-color:#e1341f;"> failure </span>
-                                        <?php endif; ?>
+                                        <?php }?>
                                     </td>
                                     <td data-value="10" class="history_state">
                                         <?php if ($o->payment == 1): ?>
@@ -222,8 +233,7 @@
                                             <span class="label" style="background-color:#ef8934; border-color:#ef8934;"> pay on cash </span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="history_invoice"
-                                        style="display: table-cell;"> <?= empty($o->transaction_no) ? "-" : $o->transaction_no ?>  </td>
+                                    <td class="history_invoice" style="display: table-cell;"> <?= empty($o->transaction_no) ? "-" : $o->transaction_no ?> </td>
                                     <td class="history_detail footable-last-column" style="display: table-cell;"><a
                                             class="btn btn-outline button button-small btn-sm"
                                             href="<?= base_url() ?>cart/order_detail/<?= $o->id ?>">
@@ -273,7 +283,8 @@
                                                     </li>
                                                     <li class="address_company"><?= $customer->company ?></li>
                                                     <li><span
-                                                            class="address_address1"><?php $cus = json_decode($order->customer_detail);
+                                                            class="address_address1"><?php
+                                                            $cus = json_decode($order[0]->customer_detail);
                                                             echo $cus->shipping; ?></span></li>
                                                     <li><span class="address_city"><?= $cus->city ?>,</span> <span
                                                             class="address_State:name"><?= $cus->state ?></span> <span
@@ -296,7 +307,7 @@
 
                                 <div id="order-detail-content" class="table_block table-responsive">
 
-                                    <?php $carts = json_decode($order->cart_details, true); ?>
+                                    <?php $carts = json_decode($order[0]->cart_details, true); ?>
 
                                     <table class="table table-bordered">
                                         <thead>
@@ -315,19 +326,19 @@
                                          </tr>-->
                                         <tr class="item">
                                             <td colspan="1"><strong>Items (tax incl.) </strong></td>
-                                            <td colspan="4"><span class="price"><?= number_format($order->total, 2) ?>
+                                            <td colspan="4"><span class="price"><?= number_format($order[0]->total, 2) ?>
                                                     LKR</span></td>
                                         </tr>
                                         <tr class="item">
                                             <td colspan="1"><strong>Shipping &amp; handling (tax incl.) </strong></td>
                                             <td colspan="4"><span
-                                                    class="price-shipping"><?= number_format($order->shipping, 2) ?>
+                                                    class="price-shipping"><?= number_format($order[0]->shipping, 2) ?>
                                                     LKR</span></td>
                                         </tr>
                                         <tr class="totalprice item">
                                             <td colspan="1"><strong>Total</strong></td>
                                             <td colspan="4"><span
-                                                    class="price"><?= number_format($order->total + $order->shipping, 2) ?>
+                                                    class="price"><?= number_format($order[0]->total + $order[0]->shipping, 2) ?>
                                                     LKR</span></td>
                                         </tr>
                                         </tfoot>
@@ -363,7 +374,7 @@
                     </div>
                     <ul class="footer_links clearfix">
                         <li class="pull-left"><a class="btn btn-outline button button-small btn-sm"
-                                                 href="<?= base_url() ?>user/myaccount"> <span> <i
+                                                 href="<?= base_url() ?>user"> <span> <i
                                         class="fa fa-user"></i> Back to Your Account </span> </a></li>
                         <li class="pull-right"><a class="btn btn-outline button button-small btn-sm"
                                                   href="<?= base_url() ?>"> <span><i class="fa fa-home"></i> Home</span>

@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="required id_state form-group" style="">
-        <label class="control-label col-lg-3" for="id_state">Municipality/Zone <sup>*</sup></label>
+        <label class="control-label col-lg-3" for="id_state">Zone <sup>*</sup></label>
         <div class="col-lg-9">
             <select name="ZoneId" id="ZoneId" class="form-control">
                 <option value="0" > --------------- </option>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="required id_state form-group" style="">
-        <label class="control-label col-lg-3"  for="id_state"> City <sup>*</sup></label>
+        <label class="control-label col-lg-3"  for="id_state"> Country <sup>*</sup></label>
         <div class="col-lg-9">
             <select required name="CityId" id="CityId" class="form-control">
                 <option value="" > --------------- </option>
