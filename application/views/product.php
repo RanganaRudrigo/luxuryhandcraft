@@ -213,6 +213,12 @@
             width: auto ;
         }
     </style>
+
+    <script src="js/vendor/jquery.js"></script>
+    <!-- xzoom plugin here -->
+    <script type="text/javascript" src="<?=base_url()?>js/xzoom.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>css/xzoom.css" media="all" />
+    <script src="<?=base_url()?>js/setup.js"></script>
 </head>
 <body id="product" class="product product-1 product-dkny-jeans-women-s-printed-lace-tank category-5 category-tshirts hide-left-column hide-right-column lang_en  fullwidth header-default">
 <section id="page" data-column="col-xs-12 col-sm-6 col-md-4" data-type="grid">
@@ -264,22 +270,48 @@
                             <!-- left infos-->
                             <div class="pb-left-column col-xs-12 col-sm-12 col-md-5">
                                 <!-- product img-->
-                                <div id="image-block" class="clearfix">
-                                   
-                                    <span id="view_full_size"> <img id="bigpic" class="img-responsive" itemprop="image" src="<?= base_url() ?>uploads/<?= $product->image ?>" title="" width="458" height="458"/> <span class="span_link no-print status-enable"></span> </span> </div>
+                                <!--<div id="image-block" class="clearfix">
+
+                                    <span id="view_full_size"> <img id="bigpic" class="img-responsive" itemprop="image" src="<?/*= base_url() */?>uploads/<?/*= $product->image */?>" title="" width="458" height="458"/> <span class="span_link no-print status-enable"></span> </span>
+
+                                </div>-->
                                 <!-- end image-block -->
                                 <!-- thumbnails -->
-                                <div id="views_block" class="clearfix "> <span class="view_scroll_spacer"> <a id="view_scroll_left" class="" title="Other views" href="javascript:{}"> Previous </a> </span>
+                                <div id="views_block" class="clearfix ">
+<!--                                    <span class="view_scroll_spacer"> <a id="view_scroll_left" class="" title="Other views" href="javascript:{}"> Previous </a> </span>-->
                                     <div id="thumbs_list">
+
+                                        <div class="xzoom-container">
+                                            <img class="xzoom" id="xzoom-default" src="<?= base_url() ?>uploads/<?= $product->image ?>" xoriginal="<?= base_url() ?>uploads/<?= $product->image ?>" width="458" height="458" />
+                                            <div class="xzoom-thumbs">
+                                                <a href="<?= base_url() ?>uploads/<?= $product->image ?>"><img class="xzoom-gallery" width="80" src="<?= base_url() ?>uploads/<?= $product->image ?>"  xpreview="<?= base_url() ?>uploads/<?= $product->image ?>" title="<?= $product->title ?>"></a>
+                                                <?php foreach($images as $k => $img ): ?>
+                                                <a href="<?= base_url() ?>uploads/<?= $img->image ?>"><img class="xzoom-gallery" width="80" src="<?= base_url() ?>uploads/<?= $img->image ?>"  xpreview="<?= base_url() ?>uploads/<?= $img->image ?>" title="<?= $product->title ?>"></a>
+                                                <?php endforeach; ?>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!--0ld gal
                                         <ul id="thumbs_list_frame">
-                                            <li id="thumbnail_24"> <a href="<?= base_url() ?>uploads/<?= $product->image ?>"	data-fancybox-group="other-views" class="fancybox shown" title=""> <img class="img-responsive" id="thumb_24" src="<?= base_url() ?>uploads/thumbs/<?= $product->image ?>" alt="" title="" height="80" width="80" itemprop="image" /> </a> </li>
-                                       <?php foreach($images as $k => $img ): ?>
-                                           <li id="thumbnail_<?=$k+25?>"> <a href="<?= base_url() ?>uploads/<?= $img->image ?>"	data-fancybox-group="other-views" class="fancybox" title=""> <img class="img-responsive" id="thumb_25" src="<?= base_url() ?>uploads/thumbs/<?= $img->image ?>" alt="" title="" height="80" width="80" itemprop="image" /> </a> </li>
-                                       <?php endforeach; ?>
+                                            <li id="thumbnail_24"> <a href="<?/*= base_url() */?>uploads/<?/*= $product->image */?>"	data-fancybox-group="other-views" class="fancybox shown" title=""> <img class="img-responsive" id="thumb_24" src="<?/*= base_url() */?>uploads/thumbs/<?/*= $product->image */?>" alt="" title="" height="80" width="80" itemprop="image" /> </a> </li>
+                                       <?php /*foreach($images as $k => $img ): */?>
+                                           <li id="thumbnail_<?/*=$k+25*/?>"> <a href="<?/*= base_url() */?>uploads/<?/*= $img->image */?>"	data-fancybox-group="other-views" class="fancybox" title="">
+                                                   <img class="img-responsive" id="thumb_25" src="<?/*= base_url() */?>uploads/thumbs/<?/*= $img->image */?>" alt="" title="" height="80" width="80" itemprop="image" />
+                                               </a>
+                                           </li>
+                                       <?php /*endforeach; */?>
                                         </ul>
+                                        old gal-->
+
+
+
                                     </div>
                                     <!-- end thumbs_list -->
-                                    <a id="view_scroll_right" title="Other views" href="javascript:{}"> Next </a> </div>
+<!--                                    <a id="view_scroll_right" title="Other views" href="javascript:{}"> Next </a> -->
+                                </div>
                                 <!-- end views-block -->
                                 <!-- end thumbnails -->
                                 <p class="resetimg clear no-print"> <span id="wrapResetImages" style="display: none;"> <a href="" data-id="resetImages"> <i class="fa fa-repeat"></i> Display all pictures </a> </span> </p>

@@ -74,12 +74,16 @@ class Shop extends CI_Controller
         if( !empty($options['all']) ) {
             $pro->price = $options['all'][0]->price ;
             $pro->qty = $options['all'][0]->qty ;
+//            p($options['all'][0]->price);
+//            $pro->usd = $this->convertCurrency($d['product']->price , "LKR", "USD");
+
+//
         }else{
 
         } 
 		
 		//echo "<span style='display:none' >";
-		//p($pro);
+//		p($d['product']);
 		//echo "</span>";
 
 
@@ -101,7 +105,15 @@ class Shop extends CI_Controller
 
         $this->load->view("product",$d);
     }
-
+    function convertCurrency($amount, $from, $to){
+//p($amount);
+        $url  = "https://www.google.com/finance/converter?a=$amount&from=$from&to=$to";
+        $data = file_get_contents($url);
+        preg_match("/<span class=bld>(.*)<\/span>/",$data, $converted);
+        $converted = preg_replace("/[^0-9.]/", "", $converted[1]);
+//        p($converted);
+        return round($converted, 3);
+    }
     function _writeReview(){
         $user = $this->session->userdata("front_user") ;
         $this->form_validation->set_rules('email',"Email","required|valid_email");

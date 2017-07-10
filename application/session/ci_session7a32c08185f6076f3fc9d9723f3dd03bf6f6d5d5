@@ -1,1 +1,1 @@
-__ci_last_regenerate|i:1499536451;id|s:1:"1";name|s:5:"admin";role|s:1:"1";
+__ci_last_regenerate|i:1499536451;id|s:1:"1";name|s:5:"admin";role|s:1:"1";cart_contents|a:3:{s:10:"cart_total";d:675;s:11:"total_items";d:1;s:32:"3d6ef485fe43f586ccd5faf5b303d6e6";a:7:{s:2:"id";s:7:"466-532";s:3:"qty";d:1;s:5:"price";d:675;s:4:"name";s:19:"GALAXY-J5-2016-16gb";s:7:"options";a:4:{s:4:"code";s:7:"PRO-466";s:5:"image";s:38:"SM_J510_16GB_GALAXY_J5-2016_DUOS-1.jpg";s:4:"size";i:0;s:5:"color";s:4:"Gold";}s:5:"rowid";s:32:"3d6ef485fe43f586ccd5faf5b303d6e6";s:8:"subtotal";d:675;}}

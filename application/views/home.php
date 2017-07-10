@@ -129,14 +129,14 @@
                         </div>
                         <!-- @file modules\appagebuilder\views\templates\hook\ApRow -->
                         <div class="row ApRow has-bg bg-boxed"
-                             data-bg=" no-repeat" style="background: no-repeat;margin-top: 32px;">
+                             data-bg=" no-repeat" style="background: no-repeat;margin-top: 0px;">
 
                             <!-- @file modules\appagebuilder\views\templates\hook\ApColumn -->
                             <div
                                 class="hidden-md hidden-sm hidden-xs hidden-sp col-lg-3 col-md-6 col-sm-12 col-xs-12 col-sp-12 ApColumn "
                                 ></div>
                             <!-- @file modules\appagebuilder\views\templates\hook\ApColumn -->
-                            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 col-sp-12 ApColumn ">
+                            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 col-sp-12 ApColumn " style="padding-left: 0px !important;margin: 0">
                                 <!-- @file modules\appagebuilder\views\templates\hook\ApSlideShow -->
                                 <div id="slideshow-form_4087621637510659" class="ApSlideShow">
                                     <div class="bannercontainer banner-fullwidth" style="padding: 0;margin: 0;">
@@ -145,9 +145,9 @@
                                             <!-- SLIDE IMAGE BEGIN -->
                                             <div class="slide_config"
                                                  data-link="<?= $sli->url ?>"
-                                                 data-leo_image="uploads/<?= $sli->image ?>"
+                                                 data-leo_image="<?= base_url() ?>uploads/<?= $sli->image ?>"
                                                  data-leo_pausetime="5000"
-                                                 data-leo_thumbnail="uploads/thumbs/<?= $sli->image ?>"
+                                                 data-leo_thumbnail="<?= base_url() ?>uploads/thumbs/<?= $sli->image ?>"
                                                  data-leo_background="image">
                                                 <div class="tp-caption  medium_text_white" data-x="400" data-y="275"
                                                      data-transition="wipeRight">

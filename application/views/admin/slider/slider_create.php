@@ -245,7 +245,7 @@
                     });
 
                 $('#image_upload').fileupload({
-                    url: '<?= base_url() ?>admin/slider/do_upload',
+                    url: '<?= base_url() ?>admin/product/do_upload',
                     dataType: 'json',
                     autoUpload: false,
                     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -325,8 +325,8 @@
             if (confirm("Do you want to remove this file ")) {
                 self.closest('li').remove();
             }
-        } ,
-        default_image : function(){
+        },
+        default_image: function () {
             var uploadButton = $('<button/>')
                 .addClass('btn btn-success btn-block')
                 .prop('disabled', true)
@@ -348,7 +348,7 @@
                 });
 
             $('#default_image_upload').fileupload({
-                url: '<?= base_url() ?>admin/slider/do_upload',
+                url: '<?= base_url() ?>admin/product/do_upload',
                 dataType: 'json',
                 autoUpload: false,
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -376,7 +376,7 @@
                         $('body').append('<div id="upload_progress"><i class="fa fa-spinner fa-spin"></i></div>');
                     }
                     $.each(data.files, function (index, file) {
-                        var upload_image_actions = $('<div class="upload_img_actions">').wrapInner('<span class=" fa fa-times pull-right btn  btn-danger  " onclick="image_upload.remove($(this))" > </span> <input type="hidden" name="form[image]" value="' + file.name + '" > ');
+                        var upload_image_actions = $('<div class="upload_img_actions">').wrapInner('<span class=" fa fa-times pull-right btn  btn-danger  " onclick="image_upload.remove($(this))" > </span>  ');
                         var node = $('<div class="upload_img_single thumbnail" />').append(upload_image_actions);
                         if (!index) {
                             upload_image_actions.append(uploadButton.clone(true).data(data));
@@ -408,7 +408,7 @@
                 .on('fileuploaddone', function (e, data) {
                     $.each(data.result.files, function (index, file) {
                         if (file.url) {
-                            $(data.context.children()[index]).find('.upload_img_actions').append('<div class="alert alert-success">Upload success <br/><a class="alert-link" target="_blank" href=' + file.url + '>show  image</a></div>');
+                            $(data.context.children()[index]).find('.upload_img_actions').append('<div class="alert alert-success">Upload success <br/><input type="hidden" name="form[image]" value="' + file.name + '" > <a class="alert-link" target="_blank" href=' + file.url + '>show  image</a></div>');
                         } else if (file.error) {
                             $(data.context.children()[index]).find('.upload_img_actions').append($('<div class="alert alert-danger"/>').text(file.error));
                         }
